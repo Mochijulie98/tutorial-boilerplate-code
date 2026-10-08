@@ -1,4 +1,5 @@
 import './App.css'
+import { List } from './components/list/List'
 import pokemonJSON from './pokemon.json'
 
 function App() {
@@ -10,15 +11,7 @@ function App() {
       </section>
       <section>
         <h2>Pokemon</h2>
-        <ul>
-          {pokemonJSON.map((pokemon, index) => {
-            return (
-              <li className='pokemonCard' key={index}>
-                {pokemon.name.english}
-              </li>
-            )
-          })}
-        </ul>
+        <List pokemonJSON={pokemonJSON} />
       </section>
     </>
   )
