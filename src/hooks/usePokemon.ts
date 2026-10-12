@@ -11,7 +11,6 @@ export const usePokemon = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-
             try {
                 const response = await fetch('/pokemon.json');
                 if(!response.ok) {
