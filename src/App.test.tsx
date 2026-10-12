@@ -63,6 +63,9 @@ describe("App", () => {
     } as Response);
 
     render(<App />);
+
+    expect(await screen.findByRole("heading", { name: "Pokemon" })).toBeInTheDocument();
+
     const bulbasaur = await screen.findByText(/Bulbasaur/);
     const charmander = await screen.findByText(/Charmander/);
 
