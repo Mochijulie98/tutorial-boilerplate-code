@@ -1,5 +1,6 @@
 
 import type { Pokemon } from "../../types";
+import ListItem from "../listItem/ListItem";
 import './List.css';
 
 type ListProps = {
@@ -12,11 +13,7 @@ export const List = ({pokemonJSON, handleClick}: ListProps) => {
         <ul>
           {pokemonJSON.map((pokemon) => {
             return (
-              <li className='pokemonCard' key={`${pokemon.id}`}>
-                <button type='button' onClick={() => handleClick(pokemon.name.english)}>
-                  {pokemon.name.english}
-                </button>
-              </li>
+              <ListItem pokemon={pokemon} handleClick={handleClick}/>
             )
           })}
         </ul>

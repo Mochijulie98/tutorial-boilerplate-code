@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import type { PokemonDetails } from "../types";
 
 export const usePokemon = () => {
@@ -6,7 +6,7 @@ export const usePokemon = () => {
     const [fetchError, setError] = useState<Error | null>(null);
     const [pokemon, setPokemon] = useState<PokemonDetails | null>(null);
 
-    const fetchSelectedPokemon = async (pokemonName: string) => {
+    const fetchSelectedPokemon = useCallback(async (pokemonName: string) => {
         try {
             setIsLoading(true);
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
@@ -23,7 +23,7 @@ export const usePokemon = () => {
         finally{
             setIsLoading(false);
         }
-    };
+    }, []);
 
     return {
         pokemon,
