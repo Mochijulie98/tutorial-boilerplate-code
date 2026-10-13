@@ -1,38 +1,35 @@
-
-
-import { useEffect, useState } from 'react';
-import type { Pokemon } from '../types';
+import { useState } from "react"
+import type { PokemonDetails } from "../types";
 
 export const usePokemon = () => {
-    const [data, setData] = useState<Pokemon[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
+    const [isFetchLoading, setIsLoading] = useState(false);
+    const [fetchError, setError] = useState<Error | null>(null);
+    const [pokemon, setPokemon] = useState<PokemonDetails | null>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch('/pokemon.json');
-                if(!response.ok) {
-                    throw new Error('Failed to fetch Pokemon data');
-                }
-                const jsonData = await response.json();
+    const fetchSelectedPokemon = async (pokemonName: string) => {
+        try {
+            setIsLoading(true);
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+            if(!response.ok) {
+                throw new Error(`HTTP error, status ${response.status}`);
+            }
+            const jsonData = await response.json();
 
-                setData(jsonData);
-            }
-            catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
+            setPokemon(jsonData);
         }
-        fetchData();
-    }, []);
+        catch (err: unknown){
+            setError(err as Error);
+        }
+        finally{
+            setIsLoading(false);
+        }
+    };
 
     return {
-        data, 
-        error,
-        loading
+        pokemon,
+        isFetchLoading,
+        fetchError,
+        fetchSelectedPokemon
     }
 }
 export default usePokemon;
